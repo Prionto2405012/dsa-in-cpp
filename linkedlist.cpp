@@ -38,6 +38,7 @@ public:
     void reverse_itself();
     static void recursive_display(Node* x);
     static void recursive_reverse_display(Node* x);
+    void reverse_itself_recursively();
 };
 
 void List::display() {
@@ -137,6 +138,24 @@ void List::recursive_reverse_display(Node* x) {
     recursive_reverse_display(x->next);
     cout<<x->val<<"->";
 }
+void helper(Node* x);
+Node* last_node;
+void List::reverse_itself_recursively() {
+    last_node = nullptr;
+    helper(head);
+    head->next=nullptr;
+    head = last_node;
+}
+void helper(Node *x) {
+    if (x->next->next==nullptr) {
+        last_node = x->next;
+        x->next->next = x;
+        return;
+    }
+    helper(x->next);
+    x->next->next = x;
+}
+
 
 
 int main(){
@@ -153,6 +172,8 @@ int main(){
     List::recursive_display(list.head);
     List::recursive_reverse_display(list.head);cout<<"\n";
     list.reverse_itself();
+    list.display();
+    list.reverse_itself_recursively();
     list.display();
     cout<<"Size "<<list.size<<endl;
 
