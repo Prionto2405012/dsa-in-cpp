@@ -36,7 +36,8 @@ public:
     List reverse();
     void add_end(int n);
     void reverse_itself();
-
+    static void recursive_display(Node* x);
+    static void recursive_reverse_display(Node* x);
 };
 
 void List::display() {
@@ -47,14 +48,12 @@ void List::display() {
     }
     cout<<endl;
 }
-
 void List::add_front(int n) {
     Node *temp = new Node(n);
     temp->next = head;
     head = temp;
     size++;
 }
-
 void List::add_after_position(int n, int idx) {
     if (idx>=size) return;
     Node* temp = new Node(n);
@@ -83,7 +82,6 @@ void List::remove(int idx) {
     size--;
     return;
 }
-
 List List::reverse() {
     List revlist = List();
     Node *x = head;
@@ -106,6 +104,29 @@ void List::add_end(int n) {
     x->next = temp;
 }
 
+void List::reverse_itself() {
+
+}
+
+void List::recursive_display(Node * x) {
+    if (x == nullptr) {
+        cout<<"\n";
+        return;
+    }
+    cout<<x->val<<"->";
+    recursive_display(x->next);
+}
+
+void List::recursive_reverse_display(Node* x) {
+    if (x==nullptr) {
+        cout<<"\n";
+        return;
+    }
+    recursive_reverse_display(x->next);
+    cout<<x->val<<"->";
+}
+
+
 int main(){
     List list = List();
     list.add_front(1);
@@ -117,6 +138,8 @@ int main(){
     list.display();
     List revlist = list.reverse();
     revlist.display();
-    cout<<"Size "<<list.size<<endl;
+    List::recursive_display(list.head);
+    List::recursive_reverse_display(list.head);
+    cout<<"\nSize "<<list.size<<endl;
 
 }
