@@ -105,7 +105,19 @@ void List::add_end(int n) {
 }
 
 void List::reverse_itself() {
-
+    if (head == nullptr) return;
+    Node *p,*x,*n;
+    p = nullptr;
+    x = head;
+    n = head->next;
+    while (n != nullptr) {
+        x->next = p;
+        p = x;
+        x = n;
+        n = n->next;
+    }
+    x->next = p;
+    head = x;
 }
 
 void List::recursive_display(Node * x) {
@@ -139,7 +151,9 @@ int main(){
     List revlist = list.reverse();
     revlist.display();
     List::recursive_display(list.head);
-    List::recursive_reverse_display(list.head);
-    cout<<"\nSize "<<list.size<<endl;
+    List::recursive_reverse_display(list.head);cout<<"\n";
+    list.reverse_itself();
+    list.display();
+    cout<<"Size "<<list.size<<endl;
 
 }
