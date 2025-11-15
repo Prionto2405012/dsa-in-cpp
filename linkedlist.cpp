@@ -39,6 +39,7 @@ public:
     static void recursive_display(Node* x);
     static void recursive_reverse_display(Node* x);
     void reverse_itself_recursively();
+    void insert_in_order(int n);
 };
 
 void List::display() {
@@ -106,7 +107,7 @@ void List::add_end(int n) {
 }
 
 void List::reverse_itself() {
-    if (head == nullptr) return;
+    if (head == nullptr || head->next == nullptr) return;
     Node *p,*x,*n;
     p = nullptr;
     x = head;
@@ -156,6 +157,32 @@ void helper(Node *x) {
     x->next->next = x;
 }
 
+void List::insert_in_order(int n) {
+    Node* new_node = new Node(n);
+    if (head == nullptr) {
+        head = new_node;
+        return;
+    }
+    if (n < head->val) {
+        new_node->next = head;
+        head = new_node;
+        return;
+    }
+    Node* x = head;
+    while (x != nullptr) {
+        if (x->next == nullptr) {
+            x->next = new_node;
+            return;
+        }
+        if (x->next->val >= n) {
+            new_node->next = x->next;
+            x->next = new_node;
+            return;
+        }
+        x = x->next;
+    }
+
+}
 
 
 int main(){
@@ -177,4 +204,11 @@ int main(){
     list.display();
     cout<<"Size "<<list.size<<endl;
 
+    List sortedList = List();
+    sortedList.insert_in_order(5);
+    sortedList.insert_in_order(7);
+    sortedList.insert_in_order(2);
+    sortedList.insert_in_order(1);
+    sortedList.insert_in_order(9);
+    sortedList.display();
 }
