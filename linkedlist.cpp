@@ -69,8 +69,10 @@ void List::add_after_position(int n, int idx) {
 void List::remove(int idx) {
     if (idx>=size) return;
     if (idx==0) {
+        Node* x = head;
         head = head->next;
         size--;
+        delete x;
         return;
     }
     Node *x = head;
@@ -161,22 +163,26 @@ void List::insert_in_order(int n) {
     Node* new_node = new Node(n);
     if (head == nullptr) {
         head = new_node;
+        size++;
         return;
     }
     if (n < head->val) {
         new_node->next = head;
         head = new_node;
+        size++;
         return;
     }
     Node* x = head;
     while (x != nullptr) {
         if (x->next == nullptr) {
             x->next = new_node;
+            size++;
             return;
         }
         if (x->next->val >= n) {
             new_node->next = x->next;
             x->next = new_node;
+            size++;
             return;
         }
         x = x->next;
@@ -211,4 +217,5 @@ int main(){
     sortedList.insert_in_order(1);
     sortedList.insert_in_order(9);
     sortedList.display();
+    cout<<sortedList.size<<endl;
 }
