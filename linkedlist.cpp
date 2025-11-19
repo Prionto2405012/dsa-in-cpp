@@ -40,6 +40,7 @@ public:
     static void recursive_reverse_display(Node* x);
     void reverse_itself_recursively();
     void insert_in_order(int n);
+    void reverse_itself_usingStack();
 };
 
 void List::display() {
@@ -189,6 +190,25 @@ void List::insert_in_order(int n) {
     }
 
 }
+#include <stack>
+void List::reverse_itself_usingStack() {
+    if (head==nullptr) return;
+    Node* x = head;
+    stack<Node*> S;
+    while (x->next != nullptr) {
+        S.push(x);
+        x = x->next;
+    }
+    head = x;
+    int size = S.size();
+    for (int i=0;i<size;i++) {
+        x->next = S.top();
+        S.pop();
+        x = x->next;
+    }
+    x->next = nullptr;
+    
+}
 
 
 int main(){
@@ -218,4 +238,6 @@ int main(){
     sortedList.insert_in_order(9);
     sortedList.display();
     cout<<sortedList.size<<endl;
+    sortedList.reverse_itself_usingStack();
+    sortedList.display();
 }
